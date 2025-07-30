@@ -10,23 +10,69 @@ Original file is located at
 import streamlit as st
 import pandas as pd
 import numpy as np
-import joblib  # or pickle
-from sklearn.linear_model import LinearRegression
-from sklearn.preprocessing import LabelEncoder
+import matplotlib.pyplot as plt
 
-st.title("💼 Employee Salary Prediction App")
-st.write("Enter the details below to predict the expected salary.")
+# 💅 Page setup
+st.set_page_config(
+    page_title="Salary Predictor 💼",
+    page_icon="📊",
+    layout="centered"
+)
 
-# Example Input Fields
-education = st.selectbox("Education Level", ['Bachelors', 'Masters', 'PhD'])
-job_title = st.selectbox("Job Title", ['Software Engineer', 'Data Scientist', 'HR Manager', 'Sales Associate'])
-experience = st.slider("Years of Experience", 0, 40, 1)
+# 🎯 App title
+st.markdown("""
+    <h1 style='color:#4CAF50;'>Employee Salary Predictor 💰</h1>
+    <h4 style='color:#555;'>Estimate salary based on job profile, education & experience</h4>
+    <hr style='border:1px solid #eee' />
+""", unsafe_allow_html=True)
 
-# Load model or retrain (example only; you should load trained model)
-# model = joblib.load('model.pkl')
+# 🧠 User inputs
+col1, col2 = st.columns(2)
 
-# For demo: dummy prediction
-if st.button("Predict Salary"):
-    # Replace with actual preprocessing and model prediction
-    salary = 50000 + (experience * 3000)  # dummy logic
-    st.success(f"Predicted Salary: ₹{int(salary):,}")
+with col1:
+    education = st.selectbox("🎓 Education Level", ['Bachelors', 'Masters', 'PhD'])
+
+with col2:
+    job_title = st.selectbox("💼 Job Title", ['Software Engineer', 'Data Scientist', 'HR Manager', 'Sales Associate'])
+
+experience = st.slider("📅 Years of Experience", 0, 40, step=1)
+
+# 🎯 Predict salary (replace logic later with model.predict)
+if st.button("🚀 Predict Salary"):
+    base_salary = {
+        'Software Engineer': 60000,
+        'Data Scientist': 70000,
+        'HR Manager': 50000,
+        'Sales Associate': 45000
+    }
+
+    multiplier = {
+        'Bachelors': 3000,
+        'Masters': 4000,
+        'PhD': 5000
+    }
+
+    predicted_salary = base_salary[job_title] + (experience * multiplier[education])
+
+    st.markdown(f"""
+        <div style='padding: 1em; background-color: #e8f5e9; border-left: 5px solid #4CAF50;'>
+            <h3>💸 Estimated Salary: ₹{int(predicted_salary):,}</h3>
+        </div>
+    """, unsafe_allow_html=True)
+
+# 📊 Optional chart
+with st.expander("📈 Show Experience vs Salary Trend"):
+    exp_range = list(range(0, 31))
+    trend_salary = [base_salary[job_title] + (x * multiplier[education]) for x in exp_range]
+
+    fig, ax = plt.subplots()
+    ax.plot(exp_range, trend_salary, color='#4CAF50', linewidth=2)
+    ax.set_title("Experience vs Salary")
+    ax.set_xlabel("Years of Experience")
+    ax.set_ylabel("Estimated Salary (₹)")
+    st.pyplot(fig)
+
+# 👣 Footer
+st.markdown("""<hr style="border:1px solid #eee" />""", unsafe_allow_html=True)
+st.markdown("Made with ❤️ by Sneha Verma | [GitHub](https://github.com/)")
+
