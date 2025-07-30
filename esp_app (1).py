@@ -12,21 +12,14 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-# 💅 Page setup
-st.set_page_config(
-    page_title="Salary Predictor 💼",
-    page_icon="📊",
-    layout="centered"
-)
+st.set_page_config(page_title="Salary Predictor 💼", page_icon="📊", layout="centered")
 
-# 🎯 App title
 st.markdown("""
     <h1 style='color:#4CAF50;'>Employee Salary Predictor 💰</h1>
     <h4 style='color:#555;'>Estimate salary based on job profile, education & experience</h4>
     <hr style='border:1px solid #eee' />
 """, unsafe_allow_html=True)
 
-# 🧠 User inputs
 col1, col2 = st.columns(2)
 
 with col1:
@@ -37,30 +30,30 @@ with col2:
 
 experience = st.slider("📅 Years of Experience", 0, 40, step=1)
 
-# 🎯 Predict salary (replace logic later with model.predict)
+# ✅ Move this OUTSIDE the button so it's available globally
+base_salary = {
+    'Software Engineer': 60000,
+    'Data Scientist': 70000,
+    'HR Manager': 50000,
+    'Sales Associate': 45000
+}
+
+multiplier = {
+    'Bachelors': 3000,
+    'Masters': 4000,
+    'PhD': 5000
+}
+
+# 🎯 Prediction block
 if st.button("🚀 Predict Salary"):
-    base_salary = {
-        'Software Engineer': 60000,
-        'Data Scientist': 70000,
-        'HR Manager': 50000,
-        'Sales Associate': 45000
-    }
-
-    multiplier = {
-        'Bachelors': 3000,
-        'Masters': 4000,
-        'PhD': 5000
-    }
-
     predicted_salary = base_salary[job_title] + (experience * multiplier[education])
-
     st.markdown(f"""
         <div style='padding: 1em; background-color: #e8f5e9; border-left: 5px solid #4CAF50;'>
             <h3>💸 Estimated Salary: ₹{int(predicted_salary):,}</h3>
         </div>
     """, unsafe_allow_html=True)
 
-# 📊 Optional chart
+# 📊 Graph block
 with st.expander("📈 Show Experience vs Salary Trend"):
     exp_range = list(range(0, 31))
     trend_salary = [base_salary[job_title] + (x * multiplier[education]) for x in exp_range]
@@ -72,7 +65,5 @@ with st.expander("📈 Show Experience vs Salary Trend"):
     ax.set_ylabel("Estimated Salary (₹)")
     st.pyplot(fig)
 
-# 👣 Footer
 st.markdown("""<hr style="border:1px solid #eee" />""", unsafe_allow_html=True)
 st.markdown("Made with ❤️ by Sneha Verma | [GitHub](https://github.com/)")
-
