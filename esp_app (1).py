@@ -66,4 +66,4 @@ with st.expander("📈 Show Experience vs Salary Trend"):
     st.pyplot(fig)
 
 st.markdown("""<hr style="border:1px solid #eee" />""", unsafe_allow_html=True)
-st.markdown("Made with ❤️ by Sneha Verma | [GitHub](https://github.com/)")
+st.markdown("Made by Sneha Verma | [GitHub](https://github.com/snehaaverma4/Employee-Salary-Prediction)")
