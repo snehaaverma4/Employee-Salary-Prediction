@@ -45,19 +45,23 @@ multiplier = {
 }
 
 # 🎯 Prediction block
-st.markdown(f"""
-    <div style='
-        padding: 1em; 
-        background-color: #1e5128; 
-        border-left: 5px solid #a6f4a4;
-        border-radius: 8px;
-        margin-top: 10px;
-    '>
-        <h2 style='color: #ffffff; font-size: 28px;'>
-            💸 Estimated Salary: ₹{int(predicted_salary):,}
-        </h2>
-    </div>
-""", unsafe_allow_html=True)
+if st.button("🚀 Predict Salary"):
+    predicted_salary = base_salary[job_title] + (experience * multiplier[education])
+
+    st.markdown(f"""
+        <div style='
+            padding: 1em; 
+            background-color: #1e5128; 
+            border-left: 5px solid #a6f4a4;
+            border-radius: 8px;
+            margin-top: 10px;
+        '>
+            <h2 style='color: #ffffff; font-size: 28px;'>
+                💸 Estimated Salary: ₹{int(predicted_salary):,}
+            </h2>
+        </div>
+    """, unsafe_allow_html=True)
+
 
 
 # 📊 Graph block
